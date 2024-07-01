@@ -87,7 +87,7 @@ export default {
             </div>
             <div class="signup-form__buttons">
               <Button>Login</Button>
-              <router-link style="width: 100%" to="/signup ">
+              <router-link style="width: 100%" to="/signup">
                 <Button light>Sign Up</Button>
               </router-link>
             </div>

@@ -10,8 +10,15 @@ import RoketsItem from "../views/RoketsItem.vue";
 
 const routes = [{
     path: '/',
+    name: 'main',
+    redirect: {
+      path: '/signin'
+    }
+  },
+  {
+    path: '/signin',
     name: 'signIn',
-    component: SignIn
+    component: SignIn,
   },
   {
     path: '/signup',
