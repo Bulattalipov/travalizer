@@ -1,5 +1,10 @@
 <script>
+import Loader from '../components/Loader.vue';
+
 export default {
+  components: {
+    Loader,
+  },
   data() {
     return {
       roket: null,
@@ -10,7 +15,6 @@ export default {
       const data = await fetch(`https://api.spacexdata.com/v3/rockets/${this.$route.params.slug}`);
       const dataArray = await data.json();
       this.roket = dataArray;
-      console.log(this.roket);
     },
   },
   mounted() {
@@ -20,7 +24,8 @@ export default {
 </script>
 
 <template>
-  <div v-if="roket" class="roket" style="background-image: url('../assets/img/roket.jpg')">
+  <Loader v-if="!roket"></Loader>
+  <div v-else class="roket" style="background-image: url('../assets/img/roket.jpg')">
     <div class="container">
       <div class="roket__wrapper">
         <h1 class="roket__title">

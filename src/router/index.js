@@ -53,8 +53,6 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   const authToken = Boolean(JSON.parse(localStorage.getItem('authToken')));
   const requireAuth = to.matched.some(record => record.meta.auth)
-  // console.log("authToken", authToken);
-  // console.log("requireAuth", requireAuth);
   if (!authToken && requireAuth) {
     next("/");
   } else {

@@ -1,16 +1,21 @@
 <script>
+import Loader from '../components/Loader.vue';
+
 export default {
+  components: {
+    Loader,
+  },
   data() {
     return {
       rokets: null,
     };
   },
+
   methods: {
     async getHistory() {
       const data = await fetch('https://api.spacexdata.com/v3/rockets');
       const dataArray = await data.json();
       this.rokets = dataArray;
-      console.log(dataArray);
     },
   },
   mounted() {
@@ -20,7 +25,8 @@ export default {
 </script>
 
 <template>
-  <div class="rokets" style="background-image: url('../assets/img/roket.jpg')">
+  <Loader v-if="!rokets"></Loader>
+  <div v-else class="rokets" style="background-image: url('../assets/img/roket.jpg')">
     <div class="container">
       <div class="rokets__wrapper">
         <h1 class="rokets__title">Ракеты Space X</h1>

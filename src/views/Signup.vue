@@ -12,6 +12,7 @@ export default {
       checked: false,
       checkerDisabled: false,
       errorMess: '',
+      loading: false,
     };
   },
   components: {
@@ -22,16 +23,18 @@ export default {
   methods: {
     register() {
       if (this.checked) {
+        this.loading = true;
+
         createUserWithEmailAndPassword(getAuth(), this.email, this.password)
           .then((data) => {
-            console.log('Successfully registered');
-
             this.email = '';
             this.password = '';
             this.checked = false;
 
             router.push('/rokets');
             localStorage.setItem('authToken', JSON.stringify(data.user.accessToken));
+
+            this.loading = false;
           })
           .catch((error) => {
             switch (error.code) {
@@ -51,6 +54,8 @@ export default {
                 this.errorMess = '';
                 break;
             }
+
+            this.loading = false;
           });
       } else {
         this.checkerDisabled = true;
@@ -81,7 +86,7 @@ export default {
               <Checkbox v-model:checked="checked" :checkerDisabled="checkerDisabled" />
             </div>
             <div class="signup-form__buttons">
-              <Button>Sign Up</Button>
+              <Button :disabled="this.loading">Sign Up</Button>
               <router-link style="width: 100%" to="/">
                 <Button light>Login</Button>
               </router-link>

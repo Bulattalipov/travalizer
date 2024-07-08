@@ -12,6 +12,7 @@ export default {
       checked: false,
       checkerDisabled: false,
       errorMess: '',
+      loading: false,
     };
   },
   components: {
@@ -22,19 +23,20 @@ export default {
   methods: {
     entrance() {
       if (this.checked) {
+        this.loading = true;
+
         signInWithEmailAndPassword(getAuth(), this.email, this.password)
           .then((data) => {
-            console.log('Successfully entrance');
-
             this.email = '';
             this.password = '';
             this.checked = false;
 
             router.push('/rokets');
             localStorage.setItem('authToken', JSON.stringify(data.user.accessToken));
+
+            this.loading = false;
           })
           .catch((error) => {
-            console.log(error.code);
             switch (error.code) {
               case 'auth/invalid-email':
                 this.errorMess = 'Invalid email';
@@ -55,6 +57,8 @@ export default {
                 this.errorMess = '';
                 break;
             }
+
+            this.loading = false;
           });
       } else {
         this.checkerDisabled = true;
@@ -86,7 +90,7 @@ export default {
               <a class="signup-form__forgot" href="#">Forgot password?</a>
             </div>
             <div class="signup-form__buttons">
-              <Button>Login</Button>
+              <Button :disabled="this.loading">Login</Button>
               <router-link style="width: 100%" to="/signup">
                 <Button light>Sign Up</Button>
               </router-link>

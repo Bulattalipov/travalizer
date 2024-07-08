@@ -4,12 +4,15 @@ export default {
     light: {
       type: Boolean,
     },
+    disabled: {
+      type: Boolean,
+    },
   },
 };
 </script>
 
 <template>
-  <button class="btn" :class="{ 'btn--light': light }"><slot></slot></button>
+  <button class="btn" :class="{ 'btn--light': light }" :disabled="disabled"><slot></slot></button>
 </template>
 
 <style scoped lang="scss">
@@ -29,6 +32,10 @@ export default {
     border: 1px solid #029664;
     background-color: #fff;
     color: #029664;
+  }
+
+  &:disabled {
+    background-color: grey;
   }
 }
 </style>
